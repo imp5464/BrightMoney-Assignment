@@ -1,8 +1,9 @@
 import React, {useEffect,useState}  from 'react';
 import { useDispatch ,connect} from "react-redux";
-import { showBills ,addBill ,deleteBill ,filterBill} from './redux';
-import './App.css';
-function DashBoard(props) {
+import { showBills ,addBill ,deleteBill ,filterBill,updateBill} from './redux';
+import { Button } from 'react-bootstrap';
+
+ function Add(props) {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(showBills());
@@ -10,11 +11,8 @@ function DashBoard(props) {
     const [details, setDetails] = useState({
         category: 'select',
         description: '',
-        amount: 0,
+        amount: 0 ,
     });
-    // const  setValue= (category, description, amount) => {
-    //     setDetails({ category, description, amount });
-    // };
     const changeHandler = (event) => {
         const { name, value } = event.target;
     
@@ -30,7 +28,7 @@ function DashBoard(props) {
       };
   return (
     <div>
-        <div>
+       <div class= " p-2">
             <p>category</p>
             <select value={details.category} name='category' onChange={changeHandler}>
                 <option value='select'>select</option>
@@ -41,29 +39,23 @@ function DashBoard(props) {
                 <option value='Travel'>Travel</option>
                 <option value='Personal Care'>Personal Care</option>
             </select>
-            <p>description</p>
+            <p>Description</p>
             <input value={details.description} name='description' onChange={changeHandler}></input>
-            <p>amount</p>
-            <input value={details.amount} name='amount' onChange={changeHandler}></input>
-            <button onClick={calls}>add</button>
+            <p>Amount</p>
+            <input value={details.amount} type='number' name='amount' onChange={changeHandler}></input>
+            <div >
+            {details.category!='select' && details.amount!=0 && details.description!='' &&<Button variant="primary" size="sm" onClick={calls}> ADD </Button>}
+            {(details.category=='select' || details.amount==0 || details.description=='') && <Button variant="primary" size="sm" onClick={calls} disabled> ADD </Button>}
+            </div>
+
         </div>
-        
-        <div>
-            <button onClick={()=>filterBill(details.category)}>filter</button>
-        </div>
-        {props.bills.map((details, index) => {
-                    return (
-                        <div className='bill'>
-                        <h1>{details.category}</h1>
-                        <h1>{details.description}</h1>
-                        <h1>{details.amount}</h1>
-                        <h1>{details.date}</h1>
-                        <button onClick={()=>props.deleteBill(details.id)}>Delete Bill</button>
-                        </div>
-                    );
-                })}
+            
+           
+           
+           
     </div>
-  );
+  )
+  
 }
 const mapStateToProps = (state) => {
     return {
@@ -78,6 +70,9 @@ const mapDispatchToProps = (dispatch) => {
         addBill: function (details) {
             dispatch(addBill(details));
         },
+        updateBill: function (details) {
+            dispatch(updateBill(details));
+        },
         deleteBill: function (id) {
             dispatch(deleteBill(id));
         },
@@ -86,5 +81,5 @@ const mapDispatchToProps = (dispatch) => {
         },
     };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(DashBoard);
+export default connect(mapStateToProps, mapDispatchToProps)(Add);
 

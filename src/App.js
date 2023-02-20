@@ -1,14 +1,29 @@
 import React  from "react";
 import { Provider } from "react-redux";
-import DashBoard from './DashBoard';
 import store from "./redux/store";
+import {BrowserRouter as Router ,Route,Switch} from 'react-router-dom'
+import Navi from "./Navbar";
+import Add from "./add";
+import Show from "./show"
+import MonthlyBudget from "./MonthlyBudget";
+
+
+
 function App() {
   return (
-    <Provider store={store}>
+    
+    <Router>
     <div className="App">
-      <DashBoard />
+      <Navi></Navi>
+      <Switch>
+        <Route exact path='/show' component={Show}/>
+        <Route path='/add' component={Add}/> 
+        <Route path='/MonthlyBudget' component={MonthlyBudget}/> 
+       
+      </Switch>
     </div>
-    </Provider>
+    
+    </Router>
   );
 }
 

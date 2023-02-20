@@ -2,5 +2,7 @@ export {
     addBill,
     showBills,
     deleteBill,
-    filterBill
+    filterBill,
+    updateBill,
+    monthlyBill
 } from "../redux/action/useraction";
